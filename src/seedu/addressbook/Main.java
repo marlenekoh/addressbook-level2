@@ -4,9 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.addressbook.commands.Command;
-import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.*;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
@@ -78,7 +76,10 @@ public class Main {
         System.exit(0);
     }
 
-    /** Reads the user command and executes it, until the user issues the exit command.  */
+    /**
+     * Reads the user command and executes it, until the user issues the exit command.
+     * Executes list immediately if command is add or delete.
+     */
     private void runCommandLoopUntilExitCommand() {
         Command command;
         do {
@@ -88,6 +89,12 @@ public class Main {
             recordResult(result);
             ui.showResultToUser(result);
 
+            if (command instanceof AddCommand || command instanceof DeleteCommand) {
+                Command commandTemp = new Parser().parseCommand(ListCommand.COMMAND_WORD);
+                CommandResult resultTemp = executeCommand(commandTemp);
+                recordResult(resultTemp);
+                ui.showResultToUser(resultTemp);
+            }
         } while (!ExitCommand.isExit(command));
     }
 
