@@ -140,8 +140,8 @@
 ##########################################################
 
   # clears all
-  # should automatically list after clear
   clear
+  list
 
 ##########################################################
 # test exit command
