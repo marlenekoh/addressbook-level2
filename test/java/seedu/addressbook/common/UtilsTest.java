@@ -47,19 +47,28 @@ public class UtilsTest {
 
     @Test
     public void isAnyNull() throws Exception {
-        // empty list
-        assertNoNull();
+        isAnyNull_EmptyList_returnsFalse();
+        isAnyNull_SomeNull__returnsTrue();
+        isAnyNull_AllNull_returnsTrue();
+        isAnyNull_NoNull_returnsFalse();
+    }
 
-        // no null objects
+    private void isAnyNull_EmptyList_returnsFalse() {
+        assertNoNull();
+    }
+
+    private void isAnyNull_NoNull_returnsFalse() {
         assertNoNull(new Integer(1), 1);
         assertNoNull("a", "b", "c");
+    }
 
-        // some null objects
+    private void isAnyNull_SomeNull__returnsTrue() {
         assertHasNull(null, "abc");
         assertHasNull("abc", null, 1);
         assertHasNull(null, new Integer(1), null, "abc");
+    }
 
-        // all null objects
+    private void isAnyNull_AllNull_returnsTrue() {
         assertHasNull(null, null);
         assertHasNull(null, null, null);
     }
